@@ -54,8 +54,8 @@ async function fetchGitHubProjects() {
       
       if (lang === "c++" || lang === "cpp" || topics.includes("cpp") || topics.includes("cplusplus")) {
         projectType = "cpp";
-      } else if (lang === "python" || topics.includes("ai") || topics.includes("machine-learning") || topics.includes("ml")) {
-        projectType = "ai";
+      } else if (lang === "python" || topics.includes("python") || topics.includes("machine-learning") || topics.includes("ml")) {
+        projectType = "PY";
       } else if (["javascript", "html", "css", "typescript"].includes(lang) || topics.includes("web")) {
         projectType = "web";
       }
