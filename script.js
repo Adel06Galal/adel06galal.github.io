@@ -1,5 +1,5 @@
 // ==========================================
-// 1. ELEMENTS & SELECTIONS[cite: 1]
+// 1. ELEMENTS & SELECTIONS
 // ==========================================
 const menuBtn = document.getElementById("menuBtn");
 const navLinks = document.getElementById("navLinks");
@@ -16,7 +16,7 @@ const projectsContainer = document.getElementById("projectsContainer");
 const filterButtons = document.querySelectorAll(".filter-btn");
 
 // ==========================================
-// 2. DYNAMIC GITHUB PROJECTS FETCHING WITH IGNORE LOGIC
+// 2. DYNAMIC GITHUB PROJECTS FETCHING WITH LINK LOGIC
 // ==========================================
 let projects = []; 
 
@@ -38,7 +38,7 @@ async function fetchGitHubProjects() {
     
     const repos = await response.json();
     
-    // التعديل السحري هنا: تصفية المستودعات واستبعاد المنسوخة، وريبو المحفظة، وريبو الريدمي الشخصي
+    // تصفية واستبعاد الريبوهات الخاصة بالواجهة
     const myOwnRepos = repos.filter(repo => {
       const repoName = repo.name.toLowerCase();
       return !repo.fork && 
@@ -67,12 +67,21 @@ async function fetchGitHubProjects() {
       const projectTags = repo.language ? [repo.language] : [];
       if (topics.length > 0) projectTags.push(...topics.slice(0, 2));
 
+      // منطق ذكي لتحديد رابط التفاصيل أو العرض الحي
+      let liveUrl = "";
+      if (repo.homepage) {
+        liveUrl = repo.homepage; // لو كاتب رابط في الـ About بتاع الريبو
+      } else if (projectType === "web" && repo.has_pages) {
+        liveUrl = `https://${username}.github.io/${repo.name}`; // رابط جيت هاب بيجز التلقائي لمشاريع الويب
+      }
+
       return {
         title: cleanTitle,
         type: projectType,
         desc: repo.description || "No description provided for this repository yet.",
         tags: projectTags.length > 0 ? projectTags : ["Project"],
-        github: repo.html_url
+        github: repo.html_url,
+        live: liveUrl // حفظ الرابط الحي إن وجد
       };
     });
 
@@ -108,6 +117,10 @@ function renderProjects(filter = "all") {
   }
 
   filtered.forEach(project => {
+    // تشكيل رابط الديتيلز: لو فيه رابط لايف يروحله، لو مفيش يروح لسكشن الـ README على جيت هاب
+    const detailsLink = project.live ? project.live : `${project.github}#readme`;
+    const detailsText = project.live ? '<i class="fa-solid fa-rocket"></i> Live Demo' : 'Details';
+
     cardsHTML += `
       <article class="project-card">
         <div class="project-label">
@@ -124,8 +137,8 @@ function renderProjects(filter = "all") {
           <a href="${project.github}" target="_blank" rel="noopener noreferrer">
             <i class="fa-brands fa-github"></i> GitHub
           </a>
-          <a href="${project.github}" target="_blank" rel="noopener noreferrer">
-            Details
+          <a href="${detailsLink}" target="_blank" rel="noopener noreferrer">
+            ${detailsText}
           </a>
         </div>
       </article>
@@ -144,7 +157,7 @@ filterButtons.forEach(btn => {
 });
 
 // ==========================================
-// 3. MOBILE MENU[cite: 1]
+// 3. MOBILE MENU
 // ==========================================
 if (menuBtn && navLinks) {
   menuBtn.addEventListener("click", (e) => {
@@ -170,7 +183,7 @@ if (menuBtn && navLinks) {
 }
 
 // ==========================================
-// 4. REVEAL ON SCROLL[cite: 1]
+// 4. REVEAL ON SCROLL
 // ==========================================
 function revealOnScroll() {
   const triggerBottom = window.innerHeight - 90;
@@ -184,7 +197,7 @@ function revealOnScroll() {
 }
 
 // ==========================================
-// 5. TYPING EFFECT[cite: 1]
+// 5. TYPING EFFECT
 // ==========================================
 const phrases = [
   "AI Student",
@@ -225,7 +238,7 @@ function typeEffect() {
 }
 
 // ==========================================
-// 6. THEME TOGGLE[cite: 1]
+// 6. THEME TOGGLE
 // ==========================================
 function updateThemeIcon() {
   if (!themeToggle) return;
@@ -261,7 +274,7 @@ if (themeToggle) {
 }
 
 // ==========================================
-// 7. ACTIVE NAV LINK ON SCROLL[cite: 1]
+// 7. ACTIVE NAV LINK ON SCROLL
 // ==========================================
 function updateActiveLink() {
   let current = "";
@@ -284,7 +297,7 @@ function updateActiveLink() {
 }
 
 // ==========================================
-// 8. SCROLL PROGRESS BAR[cite: 1]
+// 8. SCROLL PROGRESS BAR
 // ==========================================
 function updateProgressBar() {
   if (!progressBar) return;
@@ -297,7 +310,7 @@ function updateProgressBar() {
 }
 
 // ==========================================
-// 9. BACK TO TOP[cite: 1]
+// 9. BACK TO TOP
 // ==========================================
 function toggleBackToTop() {
   if (!backToTop) return;
@@ -319,7 +332,7 @@ if (backToTop) {
 }
 
 // ==========================================
-// 10. NAVBAR SCROLL STYLE[cite: 1]
+// 10. NAVBAR SCROLL STYLE
 // ==========================================
 function updateNavbarState() {
   if (!navbar) return;
@@ -332,7 +345,7 @@ function updateNavbarState() {
 }
 
 // ==========================================
-// 11. BACKGROUND PARALLAX[cite: 1]
+// 11. BACKGROUND PARALLAX
 // ==========================================
 function updateParallax() {
   if (!orbs.length) return;
@@ -346,7 +359,7 @@ function updateParallax() {
 }
 
 // ==========================================
-// 12. COMBINED SCROLL HANDLER[cite: 1]
+// 12. COMBINED SCROLL HANDLER
 // ==========================================
 function handleScroll() {
   revealOnScroll();
@@ -358,7 +371,7 @@ function handleScroll() {
 }
 
 // ==========================================
-// 13. INIT RUNNERS[cite: 1]
+// 13. INIT RUNNERS
 // ==========================================
 window.addEventListener("scroll", handleScroll);
 
