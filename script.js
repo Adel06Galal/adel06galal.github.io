@@ -16,17 +16,15 @@ const projectsContainer = document.getElementById("projectsContainer");
 const filterButtons = document.querySelectorAll(".filter-btn");
 
 // ==========================================
-// 2. DYNAMIC GITHUB PROJECTS FETCHING
+// 2. DYNAMIC GITHUB PROJECTS FETCHING WITH IGNORE LOGIC
 // ==========================================
-let projects = []; // مصفوفة فارغة لتخزين البيانات القادمة من API
+let projects = []; 
 
 async function fetchGitHubProjects() {
   const username = "Adel06Galal";
-  // جلب المستودعات العامة وترتيبها من الأحدث للأقدم
   const url = `https://api.github.com/users/${username}/repos?sort=updated&per_page=100`;
   
   try {
-    // عرض رسالة تحميل مؤقتة للمستخدم
     if (projectsContainer) {
       projectsContainer.innerHTML = `
         <p style="grid-column: 1/-1; text-align: center; color: var(--muted); padding: 20px;">
@@ -40,16 +38,19 @@ async function fetchGitHubProjects() {
     
     const repos = await response.json();
     
-    // تصفية المشاريع لاستبعاد المستودعات المنسوخة (Forks) والتركيز على مشاريعك فقط
-    const myOwnRepos = repos.filter(repo => !repo.fork);
+    // التعديل السحري هنا: تصفية المستودعات واستبعاد المنسوخة، وريبو المحفظة، وريبو الريدمي الشخصي
+    const myOwnRepos = repos.filter(repo => {
+      const repoName = repo.name.toLowerCase();
+      return !repo.fork && 
+             repoName !== "adel06galal.github.io" && 
+             repoName !== "adel06galal";
+    });
 
-    // تحويل وتجهيز البيانات لتطابق كود التصميم الخاص بموقعك
     projects = myOwnRepos.map(repo => {
       const lang = repo.language ? repo.language.toLowerCase() : "";
       const topics = repo.topics || [];
       
-      // منطق ذكي لتحديد القسم المناسب للفلترة (cpp, ai, web)
-      let projectType = "web"; // افتراضي
+      let projectType = "web"; 
       
       if (lang === "c++" || lang === "cpp" || topics.includes("cpp") || topics.includes("cplusplus")) {
         projectType = "cpp";
@@ -59,12 +60,10 @@ async function fetchGitHubProjects() {
         projectType = "web";
       }
 
-      // تحسين طريقة عرض اسم المشروع (حذف الشرطات وجعل الحروف الأولى Capital)
       const cleanTitle = repo.name
         .replace(/[-_]/g, " ")
         .replace(/\b\w/g, char => char.toUpperCase());
 
-      // اختيار الكلمات الدلالية (اللعبة الأساسية + أول كلمتين من الـ Topics)
       const projectTags = repo.language ? [repo.language] : [];
       if (topics.length > 0) projectTags.push(...topics.slice(0, 2));
 
@@ -77,7 +76,6 @@ async function fetchGitHubProjects() {
       };
     });
 
-    // رندر المشاريع لأول مرة (عرض الكل)
     renderProjects("all");
 
   } catch (error) {
@@ -98,7 +96,6 @@ function renderProjects(filter = "all") {
   projectsContainer.innerHTML = "";
   let cardsHTML = "";
 
-  // تصفية المشاريع بناءً على الفلتر المختار[cite: 1]
   const filtered = projects.filter(p => filter === "all" || p.type === filter);
 
   if (filtered.length === 0) {
@@ -110,7 +107,6 @@ function renderProjects(filter = "all") {
     return;
   }
 
-  // بناء كود الـ HTML وتجميعه في متغير واحد لضمان أفضل أداء للمتصفح[cite: 1]
   filtered.forEach(project => {
     cardsHTML += `
       <article class="project-card">
@@ -139,7 +135,6 @@ function renderProjects(filter = "all") {
   projectsContainer.innerHTML = cardsHTML;
 }
 
-// إضافة حدث الضغط لأزرار الفلترة[cite: 1]
 filterButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     filterButtons.forEach(b => b.classList.remove("active"));
@@ -368,7 +363,7 @@ function handleScroll() {
 window.addEventListener("scroll", handleScroll);
 
 window.addEventListener("load", () => {
-  fetchGitHubProjects(); // جلب المستودعات الحية الحقيقية وتصنيفها ديناميكياً بدلاً من البيانات الاستاتيكية القديمة
+  fetchGitHubProjects(); 
   applySavedTheme();
   revealOnScroll();
   updateActiveLink();
