@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adel Galal | Portfolio</title>
+  <meta
+    name="description"
+    content="Adel Galal - Artificial Intelligence student focused on software engineering, problem solving, databases, and building strong technical depth through real projects."
+  />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+</head>
+<body>
+  <!-- Background FX -->
+  <div class="bg-grid"></div>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+  <div class="noise-overlay"></div>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Back To Top -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <a href="#home" class="brand">
+      <span class="brand-dot"></span>
+      Adel Galal
+    </a>
+
+    <div class="nav-actions">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#focus" class="nav-link">Focus</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#journey" class="nav-link">Journey</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="home" class="hero section reveal">
+    <div class="hero-content">
+      <div class="hero-text-side">
+        <p class="section-mini hero-mini">AI Student • Software Engineering Focus • Problem Solver</p>
+
+        <h1>
+          Building
+          <span>systems, skills,</span>
+          and a future in tech.
+        </h1>
+
+        <h2 class="typing-line">
+          <span id="typingText"></span><span class="cursor">|</span>
+        </h2>
+
+        <p class="hero-description">
+          I’m Adel Galal, an Artificial Intelligence student focused on software engineering,
+          problem solving, databases, and building real technical depth through projects,
+          consistency, and long-term learning.
+        </p>
+
+        <div class="hero-pills">
+          <span>C++</span>
+          <span>Problem Solving</span>
+          <span>AI</span>
+          <span>Databases</span>
+          <span>Web Development</span>
+        </div>
+
+        <div class="hero-buttons">
+          <a href="#projects" class="btn btn-primary">
+            <i class="fa-solid fa-table-cells-large"></i>
+            View Projects
+          </a>
+          <a href="#contact" class="btn btn-secondary">
+            <i class="fa-solid fa-paper-plane"></i>
+            Contact Me
+          </a>
+          <a href="Adel-Galal-CV.pdf" class="btn btn-ghost" download>
+            <i class="fa-solid fa-file-arrow-down"></i>
+            Download CV
+          </a>
+        </div>
+
+        <div class="hero-socials">
+          <a href="https://github.com/Adel06Galal" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/adelgalal06" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <i class="fa-brands fa-linkedin-in"></i>
+          </a>
+          <a href="mailto:adel777galal22@gmail.com" aria-label="Email">
+            <i class="fa-solid fa-envelope"></i>
+          </a>
+          <a href="https://wa.me/201023380494" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual-side">
+        <div class="hero-photo-wrap">
+          <div class="hero-photo-glow"></div>
+
+          <div class="floating-card card-top-left">
+            <span class="floating-label">Current Focus</span>
+            <strong>C++ / DSA / Projects</strong>
+          </div>
+
+          <div class="floating-card card-top-right">
+            <span class="floating-label">Direction</span>
+            <strong>Software + AI + Databases</strong>
+          </div>
+
+          <div class="floating-card card-bottom-left">
+            <span class="floating-label">Mindset</span>
+            <strong>Consistency & Deep Work</strong>
+          </div>
+
+          <div class="floating-card card-bottom-right">
+            <span class="floating-label">Goal</span>
+            <strong>Strong Technical Depth</strong>
+          </div>
+
+          <div class="photo-frame">
+            <div class="photo-decoration photo-decoration-1"></div>
+            <div class="photo-decoration photo-decoration-2"></div>
+            <img src="profile.jpeg" alt="Adel Galal" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-bottom-strip">
+      <div class="hero-strip-card">
+        <span class="strip-label">Primary Track</span>
+        <strong>Artificial Intelligence Student</strong>
+      </div>
+      <div class="hero-strip-card">
+        <span class="strip-label">Core Strengths</span>
+        <strong>Logic • Learning • Technical Curiosity</strong>
+      </div>
+      <div class="hero-strip-card">
+        <span class="strip-label">Building Toward</span>
+        <strong>Real Projects & Software Engineering Growth</strong>
+      </div>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about" class="section reveal">
+    <div class="section-head split-head">
+      <div>
+        <p class="section-mini">About</p>
+        <h2>More Than a Student Portfolio</h2>
+      </div>
+      <p class="section-note">
+        This portfolio is designed to reflect how I learn, build, and grow —
+        not just what tools I’ve touched.
+      </p>
+    </div>
+
+    <div class="about-layout">
+      <div class="card about-main">
+        <div class="card-glow"></div>
+        <h3>Who I Am</h3>
+        <p>
+          I’m Adel Galal, an Artificial Intelligence student building a strong technical foundation
+          through programming, structured learning, and consistent practice. I care about understanding
+          how systems work, improving problem-solving ability, and developing the discipline required to build meaningful software.
+        </p>
+
+        <p>
+          My interests center around software engineering, databases, intelligent systems, and long-term technical growth.
+          I enjoy working independently, learning deeply, and turning curiosity into practical progress through projects,
+          experimentation, and continuous improvement.
+        </p>
+
+        <p>
+          Outside of technical work, I enjoy chess, reading, gaming, and exploring ideas that sharpen focus, strategy,
+          and disciplined thinking — qualities I try to bring into the way I learn and build.
+        </p>
+      </div>
+
+      <div class="about-side-stack">
+        <div class="card about-side">
+          <h3>Quick Overview</h3>
+          <ul class="info-list">
+            <li>
+              <span>Name</span>
+              <strong>Adel Galal</strong>
+            </li>
+            <li>
+              <span>Field</span>
+              <strong>Artificial Intelligence</strong>
+            </li>
+            <li>
+              <span>Main Focus</span>
+              <strong>Software • AI • Databases • Problem Solving</strong>
+            </li>
+            <li>
+              <span>Approach</span>
+              <strong>Structured learning & deep technical growth</strong>
+            </li>
+            <li>
+              <span>Goal</span>
+              <strong>Build impactful projects and strong technical depth</strong>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mini-stats-grid">
+          <div class="mini-stat">
+            <span>Focus Areas</span>
+            <strong>8+</strong>
+          </div>
+          <div class="mini-stat">
+            <span>Main Directions</span>
+            <strong>3</strong>
+          </div>
+          <div class="mini-stat">
+            <span>Long-Term Mindset</span>
+            <strong>100%</strong>
+          </div>
+          <div class="mini-stat">
+            <span>Work Style</span>
+            <strong>Independent</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CURRENT FOCUS -->
+  <section id="focus" class="section reveal">
+    <div class="section-head">
+      <p class="section-mini">Current Focus</p>
+      <h2>What I’m Building Right Now</h2>
+    </div>
+
+    <div class="focus-grid">
+      <div class="focus-card focus-card-large">
+        <div class="focus-icon"><i class="fa-solid fa-code"></i></div>
+        <div>
+          <h3>Strengthening C++ & Problem Solving</h3>
+          <p>
+            Building logic, clean thinking, and programming fundamentals through C++,
+            structured exercises, and deeper understanding of how solutions are designed.
+          </p>
+        </div>
+      </div>
+
+      <div class="focus-card">
+        <div class="focus-icon"><i class="fa-solid fa-diagram-project"></i></div>
+        <div>
+          <h3>Improving Data Structures & Algorithms</h3>
+          <p>Developing stronger reasoning, optimization habits, and coding depth.</p>
+        </div>
+      </div>
+
+      <div class="focus-card">
+        <div class="focus-icon"><i class="fa-solid fa-database"></i></div>
+        <div>
+          <h3>Exploring Databases & System Thinking</h3>
+          <p>Understanding data organization, CRUD workflows, and structured backend logic.</p>
+        </div>
+      </div>
+
+      <div class="focus-card">
+        <div class="focus-icon"><i class="fa-solid fa-robot"></i></div>
+        <div>
+          <h3>Learning AI Foundations</h3>
+          <p>Exploring intelligent systems, AI concepts, and the thinking behind modern smart technologies.</p>
+        </div>
+      </div>
+
+      <div class="focus-card">
+        <div class="focus-icon"><i class="fa-solid fa-laptop-code"></i></div>
+        <div>
+          <h3>Building a Stronger Portfolio</h3>
+          <p>Turning learning into visible work through projects that reflect real progress and discipline.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section reveal">
+    <div class="section-head split-head">
+      <div>
+        <p class="section-mini">Skills</p>
+        <h2>Technical Stack & Strengths</h2>
+      </div>
+      <p class="section-note">
+        Not just tools — these are the areas I’m actively building depth in.
+      </p>
+    </div>
+
+    <div class="skills-bento">
+      <article class="skill-panel skill-panel-large">
+        <div class="panel-top">
+          <div class="skill-icon"><i class="fa-solid fa-code"></i></div>
+          <span class="panel-badge">Core Foundation</span>
+        </div>
+        <h3>Software Engineering & Problem Solving</h3>
+        <p>
+          Building programming fundamentals, structured thinking, and the ability to break down problems into clear,
+          practical solutions. This is the foundation I want every future project to stand on.
+        </p>
+      </article>
+
+      <article class="skill-panel">
+        <div class="panel-top">
+          <div class="skill-icon"><i class="fa-solid fa-laptop-code"></i></div>
+          <span class="panel-badge">Programming</span>
+        </div>
+        <h3>C++</h3>
+        <p>Using C++ to strengthen logic, syntax fluency, problem solving, and deeper programming discipline.</p>
+      </article>
+
+      <article class="skill-panel">
+        <div class="panel-top">
+          <div class="skill-icon"><i class="fa-solid fa-diagram-project"></i></div>
+          <span class="panel-badge">Core CS</span>
+        </div>
+        <h3>Data Structures & Algorithms</h3>
+        <p>Learning the concepts that improve coding quality, optimization, and technical reasoning.</p>
+      </article>
+
+      <article class="skill-panel">
+        <div class="panel-top">
+          <div class="skill-icon"><i class="fa-solid fa-robot"></i></div>
+          <span class="panel-badge">AI Track</span>
+        </div>
+        <h3>Artificial Intelligence</h3>
+        <p>Exploring AI concepts, intelligent systems, and the foundations behind modern smart technologies.</p>
+      </article>
+
+      <article class="skill-panel">
+        <div class="panel-top">
+          <div class="skill-icon"><i class="fa-solid fa-database"></i></div>
+          <span class="panel-badge">Systems</span>
+        </div>
+        <h3>Databases</h3>
+        <p>Working with structured data, database concepts, and data-driven system organization.</p>
+      </article>
+
+      <article class="skill-panel">
+        <div class="panel-top">
+          <div class="skill-icon"><i class="fa-brands fa-html5"></i></div>
+          <span class="panel-badge">Front-End</span>
+        </div>
+        <h3>HTML / CSS / JavaScript</h3>
+        <p>Building personal web projects and improving layout, interaction, and presentation quality.</p>
+      </article>
+
+      <article class="skill-panel">
+        <div class="panel-top">
+          <div class="skill-icon"><i class="fa-solid fa-book"></i></div>
+          <span class="panel-badge">Growth</span>
+        </div>
+        <h3>Research & Self-Learning</h3>
+        <p>Learning through reading, experimentation, comparison, and consistent technical practice.</p>
+      </article>
+
+      <article class="skill-panel">
+        <div class="panel-top">
+          <div class="skill-icon"><i class="fa-brands fa-github"></i></div>
+          <span class="panel-badge">Workflow</span>
+        </div>
+        <h3>GitHub & Workflow</h3>
+        <p>Using GitHub and organized workflows to document progress, manage projects, and present work clearly.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section reveal">
+    <div class="section-head split-head">
+      <div>
+        <p class="section-mini">Projects</p>
+        <h2>My Real Projects</h2>
+      </div>
+      <p class="section-note">
+        Projects that show my learning, problem solving and technical growth.
+      </p>
+    </div>
+
+    <div class="project-filter">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="cpp">C++</button>
+      <button class="filter-btn" data-filter="ai">AI</button>
+      <button class="filter-btn" data-filter="web">Web</button>
+    </div>
+
+    <div class="projects-grid" id="projectsContainer">
+      <noscript>
+        <p style="grid-column: 1/-1; text-align: center; color: var(--muted); padding: 20px;">
+          Please enable JavaScript to view my projects, or check them directly on my 
+          <a href="https://github.com/Adel06Galal" target="_blank" rel="noopener noreferrer" style="color: var(--accent-2); text-decoration: underline;">GitHub</a>.
+        </p>
+      </noscript>
+    </div>
+  </section>
+
+  <!-- JOURNEY -->
+  <section id="journey" class="section reveal">
+    <div class="section-head">
+      <p class="section-mini">Journey</p>
+      <h2>Learning Journey</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <span class="timeline-stage">Stage 01</span>
+          <h3>Artificial Intelligence Student</h3>
+          <p>
+            Building an academic foundation in Artificial Intelligence while strengthening
+            software, logic, and technical problem-solving skills.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <span class="timeline-stage">Stage 02</span>
+          <h3>Growing Through Practice</h3>
+          <p>
+            Improving through C++, programming exercises, portfolio work, and continuous
+            exploration of databases, software concepts, and AI-related topics.
+          </p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <span class="timeline-stage">Stage 03</span>
+          <h3>Long-Term Direction</h3>
+          <p>
+            Working toward strong technical depth, meaningful projects, and a profile
+            that reflects consistency, discipline, and real progress over time.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERESTS -->
+  <section class="section reveal">
+    <div class="section-head">
+      <p class="section-mini">Interests</p>
+      <h2>Beyond Technical Work</h2>
+    </div>
+
+    <div class="interests-grid">
+      <div class="interest-card">Chess & Strategic Thinking</div>
+      <div class="interest-card">Technology Exploration</div>
+      <div class="interest-card">Reading & Self-Learning</div>
+      <div class="interest-card">Movies & Series</div>
+      <div class="interest-card">Gaming</div>
+      <div class="interest-card">Deep Work & Focus</div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section reveal">
+    <div class="contact-wrap">
+      <div class="contact-left">
+        <p class="section-mini">Contact</p>
+        <h2>Let’s Build Something Meaningful</h2>
+        <p class="contact-text">
+          If you're interested in software, AI, problem solving, or meaningful technical collaboration,
+          feel free to reach out. I’m always open to useful conversations, learning opportunities,
+          and building strong connections in tech.
+        </p>
+
+        <div class="contact-links">
+          <a href="https://github.com/Adel06Galal" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-github"></i>
+            GitHub
+          </a>
+
+          <a href="https://www.linkedin.com/in/adelgalal06" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-linkedin"></i>
+            LinkedIn
+          </a>
+
+          <a href="https://www.instagram.com/adel.__.galal" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-instagram"></i>
+            Instagram
+          </a>
+
+          <a href="https://www.facebook.com/share/1D6MzstUri/" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-facebook-f"></i>
+            Facebook
+          </a>
+
+          <a href="https://wa.me/201023380494" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-whatsapp"></i>
+            WhatsApp
+          </a>
+
+          <a href="mailto:adel777galal22@gmail.com">
+            <i class="fa-solid fa-envelope"></i>
+            Email
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-right">
+        <div class="contact-card">
+          <div class="contact-card-glow"></div>
+          <span class="contact-badge">Open to Growth</span>
+          <h3>Currently focused on becoming a stronger engineer.</h3>
+          <p>
+            I’m interested in learning opportunities, meaningful projects, and conversations
+            that help me grow technically and think more deeply about software and intelligent systems.
+          </p>
+
+          <div class="contact-points">
+            <div>
+              <span>Email</span>
+              <strong>adel777galal22@gmail.com</strong>
+            </div>
+            <div>
+              <span>Main Direction</span>
+              <strong>Software Engineering + AI</strong>
+            </div>
+            <div>
+              <span>Current Priority</span>
+              <strong>Projects, C++, Problem Solving</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2026 Adel Galal — Portfolio. Built with focus, curiosity, and consistency.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
