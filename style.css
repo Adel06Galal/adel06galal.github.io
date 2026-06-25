@@ -1130,6 +1130,7 @@ body.light .project-visual-badge {
   background: linear-gradient(145deg, rgba(139, 92, 246, .10), transparent 45%, rgba(34, 211, 238, .08));
   opacity: 0;
   transition: .3s;
+  pointer-events: none; /* حل السكرول التفاعلي: يخلي الماوس يخترق الخلفية الملونة ويوصل للروابط مباشرة */
 }
 
 .project-card:hover {
@@ -1172,6 +1173,8 @@ body.light .project-label {
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 18px;
+  position: relative;
+  z-index: 3;
 }
 
 .project-tags span {
@@ -1192,6 +1195,8 @@ body.light .project-tags span {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+  position: relative; /* يرفع طبقة الأزرار فوق الـ overlay */
+  z-index: 5; /* يضمن إن الطبقة قابلة للضغط بنسبة 100% */
 }
 
 .project-actions a {
@@ -1356,7 +1361,7 @@ body.light .contact-links a {
   width: 240px;
   height: 240px;
   right: -80px;
-  top:-80px;
+  top: -80px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(139, 92, 246, .22), transparent 70%);
   filter: blur(10px);
