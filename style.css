@@ -1130,7 +1130,7 @@ body.light .project-visual-badge {
   background: linear-gradient(145deg, rgba(139, 92, 246, .10), transparent 45%, rgba(34, 211, 238, .08));
   opacity: 0;
   transition: .3s;
-  pointer-events: none; /* حل السكرول التفاعلي: يخلي الماوس يخترق الخلفية الملونة ويوصل للروابط مباشرة */
+  pointer-events: none; /* حل السكرول التفاعلي */
 }
 
 .project-card:hover {
@@ -1195,8 +1195,8 @@ body.light .project-tags span {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-  position: relative; /* يرفع طبقة الأزرار فوق الـ overlay */
-  z-index: 5; /* يضمن إن الطبقة قابلة للضغط بنسبة 100% */
+  position: relative;
+  z-index: 5;
 }
 
 .project-actions a {
@@ -1467,12 +1467,14 @@ body.light .contact-points div {
   border-color: transparent;
 }
 
-/* ---------- RESPONSIVE ---------- */
+/* ---------- RESPONSIVE (الميديا كويريز المصلحة والمعدلة) ---------- */
 @media (max-width: 1250px) {
   .hero-content,
   .about-layout,
   .contact-wrap {
-    grid-template-columns: 1fr;
+    display: flex; /* تحويل لـ flex لضمان النزول السلس في الشاشات اللوحية والمتوسطة */
+    flex-direction: column;
+    gap: 22px;
   }
 
   .hero {
@@ -1484,7 +1486,9 @@ body.light .contact-points div {
   }
 
   .hero-bottom-strip {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
   }
 
   .focus-grid {
@@ -1496,7 +1500,7 @@ body.light .contact-points div {
   }
 
   .skills-bento {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
   }
 
   .skill-panel-large {
@@ -1572,7 +1576,7 @@ body.light .contact-points div {
   }
 
   .section {
-    padding: 82px var(--container);
+    padding: 60px var(--container); /* تقليل البادنج ليناسب شاشات الموبايل الضيقة */
   }
 
   .hero {
@@ -1580,12 +1584,18 @@ body.light .contact-points div {
   }
 
   .hero h1 {
-    font-size: 2.6rem;
+    font-size: 2.3rem; /* تصغير طفيف لمنع الـ Overflow */
+    line-height: 1.1;
+  }
+
+  .hero h1 span {
+    display: inline; /* جعل العنوان يتدفق بشكل طبيعي في سطرين */
   }
 
   .hero-buttons {
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
   }
 
   .btn {
@@ -1594,6 +1604,7 @@ body.light .contact-points div {
 
   .hero-socials {
     gap: 10px;
+    justify-content: center; /* توسيط الأيقونات لتصميم متوازن */
   }
 
   .hero-socials a {
@@ -1602,30 +1613,37 @@ body.light .contact-points div {
   }
 
   .hero-photo-wrap {
-    min-height: 420px;
+    min-height: 350px;
   }
 
   .photo-frame {
-    width: min(100%, 320px);
+    width: min(100%, 280px);
   }
 
   .floating-card {
-    display: none;
+    display: none !important; /* إخفاء حتمي لمنع الخروج عن أبعاد الشاشة */
   }
 
+  /* تحويل كافة الـ Bento الجريدز المعقدة لـ Flex اتجاه عمودي لمرونة كاملة */
   .focus-grid,
   .skills-bento,
-  .mini-stats-grid {
-    grid-template-columns: 1fr;
+  .projects-grid,
+  .mini-stats-grid,
+  .interests-grid {
+    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
   }
 
   .focus-card-large,
   .skill-panel-large {
-    grid-column: span 1;
+    grid-column: span 1 !important;
   }
 
   .focus-card {
     flex-direction: column;
+    align-items: flex-start;
   }
 
   .card,
@@ -1634,7 +1652,8 @@ body.light .contact-points div {
   .skill-panel,
   .timeline-card,
   .contact-card {
-    padding: 22px;
+    padding: 20px;
+    width: 100%;
   }
 
   .project-featured h3 {
@@ -1646,5 +1665,9 @@ body.light .contact-points div {
     bottom: 16px;
     width: 46px;
     height: 46px;
+  }
+
+  .timeline {
+    padding-left: 15px;
   }
 }
