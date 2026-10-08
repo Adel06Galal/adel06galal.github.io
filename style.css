@@ -8,8 +8,6 @@
    11. Motion   12. Responsive
    ========================================================================== */
 
-@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Instrument+Sans:wght@400;500;600;700&display=swap");
-
 
 /* ==========================================================================
    1. TOKENS
@@ -24,6 +22,7 @@
   --line: #222d41;
   --line-strong: #34425c;
   --accent: #ffb547;
+  --accent-2: var(--accent); /* alias: used inline in index.html */
   --accent-ink: #1a1203;
   --nav-bg: rgba(12, 17, 27, .86);
 
@@ -280,9 +279,9 @@ img { display: block; max-width: 100%; }
 
 /* The one loud element on the page */
 .hero h1 {
-  max-width: 14ch;
+  max-width: 11em;
   margin-bottom: 20px;
-  font-size: clamp(3rem, 7vw, 6.4rem);
+  font-size: clamp(2.6rem, 5.6vw, 5rem);
   font-weight: 800;
   line-height: .95;
   letter-spacing: -.045em;
@@ -290,7 +289,7 @@ img { display: block; max-width: 100%; }
 
 .hero h1 span {
   display: block;
-  color: var(--muted);
+  color: var(--accent);
 }
 
 .typing-line {
@@ -298,10 +297,10 @@ img { display: block; max-width: 100%; }
   margin-bottom: 16px;
   font-size: 1.15rem;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--muted);
 }
 
-.cursor { animation: blink .9s steps(1) infinite; }
+.cursor { color: var(--accent); animation: blink .9s steps(1) infinite; }
 
 .hero-description {
   max-width: var(--measure);
@@ -727,6 +726,10 @@ img { display: block; max-width: 100%; }
    ========================================================================== */
 .contact-wrap { display: grid; grid-template-columns: 1.05fr .95fr; align-items: stretch; gap: 20px; }
 
+.contact-left h2 { font-size: clamp(2rem, 3.4vw, 3rem); letter-spacing: -.03em; }
+.contact-right { display: flex; }
+.contact-right .contact-card { flex: 1; }
+
 .contact-text { max-width: var(--measure); margin: 16px 0 24px; color: var(--muted); }
 
 .contact-links { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -853,7 +856,7 @@ img { display: block; max-width: 100%; }
 
 @media (max-width: 760px) {
   .hero { padding-top: 40px; gap: 32px; }
-  .hero h1 { font-size: 2.6rem; }
+  .hero h1 { font-size: 2.4rem; max-width: none; }
   .hero h1 span { display: inline; }
 
   .hero-buttons { flex-direction: column; align-items: stretch; }
