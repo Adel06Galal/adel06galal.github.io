@@ -635,3 +635,28 @@ document.addEventListener("keydown", event => {
     });
   });
 })();
+
+
+/* Mind Dimension interaction layer */
+(() => {
+  const stage = document.querySelector('.mind-stage');
+  const core = document.getElementById('mindCore');
+  if (stage && core && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    stage.addEventListener('mousemove', (event) => {
+      const rect = stage.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - .5;
+      const y = (event.clientY - rect.top) / rect.height - .5;
+      core.style.animationPlayState = 'paused';
+      core.style.transform = `translate3d(${x * 18}px, ${y * 18}px, 0) rotateX(${-y * 12}deg) rotateY(${x * 14}deg)`;
+    });
+    stage.addEventListener('mouseleave', () => {
+      core.style.animationPlayState = 'running';
+      core.style.transform = '';
+    });
+  }
+
+  // Randomized tiny editorial offset for the floating words (subtle, not distracting).
+  document.querySelectorAll('.floating-word').forEach((word, i) => {
+    word.style.animation = `wordDrift ${5 + i * 1.8}s ease-in-out ${i * .4}s infinite alternate`;
+  });
+})();
