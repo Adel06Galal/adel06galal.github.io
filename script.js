@@ -386,3 +386,219 @@ window.addEventListener("load", () => {
   updateParallax();
   typeEffect();
 });
+
+// ==========================================
+// 14. COMMAND PALETTE
+// ==========================================
+const commandTrigger = document.getElementById("commandTrigger");
+const commandOverlay = document.getElementById("commandOverlay");
+const commandInput = document.getElementById("commandInput");
+const commandList = document.getElementById("commandList");
+let selectedCommand = 0;
+
+const paletteCommands = [
+  { title: "Go to Home", detail: "Jump to the hero section", icon: "fa-house", action: () => goToSection("home") },
+  { title: "About me", detail: "Learn more about Adel", icon: "fa-user", action: () => goToSection("about") },
+  { title: "Current Focus", detail: "What I’m working on right now", icon: "fa-bullseye", action: () => goToSection("focus") },
+  { title: "Skills", detail: "Explore my technical skills", icon: "fa-code", action: () => goToSection("skills") },
+  { title: "Projects", detail: "Browse my GitHub projects", icon: "fa-folder-open", action: () => goToSection("projects") },
+  { title: "Learning Journey", detail: "See my learning path", icon: "fa-route", action: () => goToSection("journey") },
+  { title: "Contact", detail: "Get in touch", icon: "fa-envelope", action: () => goToSection("contact") },
+  { title: "Open Terminal", detail: "Try the interactive portfolio terminal", icon: "fa-terminal", action: openTerminal },
+  { title: "GitHub Profile", detail: "Open github.com/Adel06Galal", icon: "fa-brands fa-github", action: () => window.open("https://github.com/Adel06Galal", "_blank", "noopener") },
+  { title: "Toggle Theme", detail: "Switch between dark and light mode", icon: "fa-circle-half-stroke", action: () => themeToggle?.click() }
+];
+
+function goToSection(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+}
+
+function openCommandPalette() {
+  if (!commandOverlay) return;
+  commandOverlay.classList.add("open");
+  commandOverlay.setAttribute("aria-hidden", "false");
+  commandInput.value = "";
+  selectedCommand = 0;
+  renderPaletteCommands();
+  setTimeout(() => commandInput.focus(), 50);
+}
+
+function closeCommandPalette() {
+  commandOverlay?.classList.remove("open");
+  commandOverlay?.setAttribute("aria-hidden", "true");
+  commandTrigger?.focus();
+}
+
+function renderPaletteCommands() {
+  if (!commandList) return;
+  const query = commandInput.value.trim().toLowerCase();
+  const matches = paletteCommands.filter(command => `${command.title} ${command.detail}`.toLowerCase().includes(query));
+  selectedCommand = Math.min(selectedCommand, Math.max(matches.length - 1, 0));
+  commandList.innerHTML = matches.length ? matches.map((command, index) => `
+    <button class="command-item ${index === selectedCommand ? "selected" : ""}" role="option" aria-selected="${index === selectedCommand}" data-command-index="${paletteCommands.indexOf(command)}">
+      <span class="command-item-icon"><i class="fa-solid ${command.icon}"></i></span>
+      <span class="command-item-copy"><strong>${command.title}</strong><small>${command.detail}</small></span>
+      ${index === selectedCommand ? "<kbd>↵</kbd>" : ""}
+    </button>
+  `).join("") : `<div class="command-empty">No commands found for “${escapeHTML(query)}”</div>`;
+
+  commandList.querySelectorAll(".command-item").forEach(item => {
+    item.addEventListener("mouseenter", () => {
+      selectedCommand = [...commandList.querySelectorAll(".command-item")].indexOf(item);
+      renderPaletteCommands();
+    });
+    item.addEventListener("click", () => runPaletteCommand(Number(item.dataset.commandIndex)));
+  });
+}
+
+function runPaletteCommand(index) {
+  const command = paletteCommands[index];
+  if (!command) return;
+  closeCommandPalette();
+  command.action();
+}
+
+function escapeHTML(value) {
+  return value.replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+}
+
+commandTrigger?.addEventListener("click", openCommandPalette);
+commandInput?.addEventListener("input", () => { selectedCommand = 0; renderPaletteCommands(); });
+commandInput?.addEventListener("keydown", event => {
+  const items = commandList?.querySelectorAll(".command-item") || [];
+  if (event.key === "ArrowDown") { event.preventDefault(); selectedCommand = Math.min(selectedCommand + 1, items.length - 1); renderPaletteCommands(); }
+  if (event.key === "ArrowUp") { event.preventDefault(); selectedCommand = Math.max(selectedCommand - 1, 0); renderPaletteCommands(); }
+  if (event.key === "Enter" && items.length) { event.preventDefault(); runPaletteCommand(Number(items[selectedCommand]?.dataset.commandIndex)); }
+  if (event.key === "Escape") closeCommandPalette();
+});
+commandOverlay?.addEventListener("click", event => { if (event.target === commandOverlay) closeCommandPalette(); });
+
+// ==========================================
+// 15. INTERACTIVE TERMINAL
+// ==========================================
+const terminalLauncher = document.getElementById("terminalLauncher");
+const terminalWindow = document.getElementById("terminalWindow");
+const terminalClose = document.getElementById("terminalClose");
+const terminalForm = document.getElementById("terminalForm");
+const terminalInput = document.getElementById("terminalInput");
+const terminalOutput = document.getElementById("terminalOutput");
+const terminalHistory = [];
+let historyPosition = 0;
+
+function openTerminal() {
+  terminalWindow?.classList.add("open");
+  terminalWindow?.setAttribute("aria-hidden", "false");
+  setTimeout(() => terminalInput?.focus(), 100);
+}
+
+function closeTerminal() {
+  terminalWindow?.classList.remove("open");
+  terminalWindow?.setAttribute("aria-hidden", "true");
+  terminalLauncher?.focus();
+}
+
+function terminalPrint(text, className = "") {
+  const line = document.createElement("p");
+  if (className) line.className = className;
+  line.textContent = text;
+  terminalOutput.appendChild(line);
+  terminalOutput.scrollTop = terminalOutput.scrollHeight;
+}
+
+function terminalLink(label, href) {
+  const line = document.createElement("p");
+  const link = document.createElement("a");
+  link.href = href;
+  link.textContent = label;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.className = "terminal-highlight";
+  line.appendChild(link);
+  terminalOutput.appendChild(line);
+  terminalOutput.scrollTop = terminalOutput.scrollHeight;
+}
+
+function runTerminalCommand(rawCommand) {
+  const command = rawCommand.trim().toLowerCase();
+  if (!command) return;
+  terminalPrint(`adel@portfolio ~ $ ${rawCommand}`, "terminal-command-line");
+  terminalHistory.push(rawCommand);
+  historyPosition = terminalHistory.length;
+
+  switch (command) {
+    case "help":
+      terminalPrint("Available commands:");
+      terminalPrint("  help      Show this command list");
+      terminalPrint("  about     About Adel Galal");
+      terminalPrint("  skills    Show technical skills");
+      terminalPrint("  projects  Jump to the projects section");
+      terminalPrint("  contact   Jump to contact information");
+      terminalPrint("  github    Open my GitHub profile");
+      terminalPrint("  linkedin  Open my LinkedIn profile");
+      terminalPrint("  resume    Download my CV (if available)");
+      terminalPrint("  clear     Clear terminal output");
+      terminalPrint("  exit      Close the terminal");
+      break;
+    case "about":
+      terminalPrint("I'm Adel Galal, an AI student focused on software engineering, problem solving, and building practical projects.", "terminal-success");
+      break;
+    case "skills":
+      terminalPrint("C++ | Python | AI | Data Structures & Algorithms | SQL | HTML | CSS | JavaScript", "terminal-success");
+      goToSection("skills");
+      break;
+    case "projects":
+      terminalPrint("Opening the projects section...", "terminal-success");
+      goToSection("projects");
+      break;
+    case "contact":
+      terminalPrint("Opening contact section...", "terminal-success");
+      goToSection("contact");
+      break;
+    case "github":
+      terminalLink("GitHub: github.com/Adel06Galal", "https://github.com/Adel06Galal");
+      break;
+    case "linkedin":
+      terminalLink("LinkedIn: linkedin.com/in/adelgalal06", "https://www.linkedin.com/in/adelgalal06");
+      break;
+    case "resume": {
+      const cvLink = document.querySelector('a[href="Adel-Galal-CV.pdf"]');
+      if (cvLink) { terminalPrint("Starting CV download...", "terminal-success"); cvLink.click(); }
+      else terminalPrint("CV file isn't linked on this site yet.", "terminal-error");
+      break;
+    }
+    case "clear":
+      terminalOutput.innerHTML = "";
+      break;
+    case "exit":
+      closeTerminal();
+      break;
+    default:
+      terminalPrint(`Command not found: ${rawCommand}. Type "help" to see commands.`, "terminal-error");
+  }
+}
+
+terminalLauncher?.addEventListener("click", openTerminal);
+terminalClose?.addEventListener("click", closeTerminal);
+terminalWindow?.addEventListener("click", event => { if (event.target === terminalWindow) closeTerminal(); });
+terminalForm?.addEventListener("submit", event => {
+  event.preventDefault();
+  const value = terminalInput.value;
+  terminalInput.value = "";
+  runTerminalCommand(value);
+});
+terminalInput?.addEventListener("keydown", event => {
+  if (event.key === "ArrowUp") { event.preventDefault(); historyPosition = Math.max(0, historyPosition - 1); terminalInput.value = terminalHistory[historyPosition] || ""; }
+  if (event.key === "ArrowDown") { event.preventDefault(); historyPosition = Math.min(terminalHistory.length, historyPosition + 1); terminalInput.value = terminalHistory[historyPosition] || ""; }
+});
+
+// Global shortcuts: Ctrl/Cmd + K opens the palette; Escape closes overlays.
+document.addEventListener("keydown", event => {
+  if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
+    event.preventDefault();
+    openCommandPalette();
+  }
+  if (event.key === "Escape") {
+    if (commandOverlay?.classList.contains("open")) closeCommandPalette();
+    else if (terminalWindow?.classList.contains("open")) closeTerminal();
+  }
+});
