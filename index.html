@@ -97,6 +97,10 @@
         <li><a href="#contact" class="nav-link">Contact</a></li>
       </ul>
 
+      <button class="command-trigger" id="commandTrigger" aria-label="Open command palette" title="Command palette (Ctrl + K)">
+        <span>⌘</span><kbd>K</kbd>
+      </button>
+
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
         <i class="fa-solid fa-moon"></i>
       </button>
@@ -612,9 +616,47 @@
     </div>
   </section>
 
+  <button class="terminal-launcher" id="terminalLauncher" aria-label="Open interactive terminal" title="Open interactive terminal">
+    <i class="fa-solid fa-terminal"></i><span>Terminal</span>
+  </button>
+
   <footer class="footer">
     <p>© 2026 Adel Galal — Portfolio. Built with focus, curiosity, and consistency.</p>
   </footer>
+
+  <!-- Command Palette -->
+  <div class="overlay command-overlay" id="commandOverlay" aria-hidden="true">
+    <div class="command-dialog" role="dialog" aria-modal="true" aria-labelledby="commandTitle">
+      <div class="command-header">
+        <div><span class="command-status-dot"></span><span id="commandTitle">Quick navigation</span></div>
+        <kbd>ESC</kbd>
+      </div>
+      <label class="sr-only" for="commandInput">Search commands</label>
+      <div class="command-search-wrap"><i class="fa-solid fa-magnifying-glass"></i>
+        <input id="commandInput" type="text" placeholder="Search pages, actions..." autocomplete="off" />
+        <kbd>Ctrl K</kbd>
+      </div>
+      <div class="command-list" id="commandList" role="listbox" aria-label="Commands"></div>
+      <div class="command-footer"><span>↑ ↓ to navigate</span><span>Enter to select</span><span>ESC to close</span></div>
+    </div>
+  </div>
+
+  <!-- Interactive Terminal -->
+  <div class="terminal-window" id="terminalWindow" aria-hidden="true">
+    <div class="terminal-topbar">
+      <div class="terminal-lights"><span></span><span></span><span></span></div>
+      <span class="terminal-title">adel@portfolio:~</span>
+      <button id="terminalClose" class="terminal-close" aria-label="Close terminal">×</button>
+    </div>
+    <div class="terminal-output" id="terminalOutput" aria-live="polite">
+      <p class="terminal-welcome">Welcome to Adel's portfolio terminal.</p>
+      <p>Type <span class="terminal-highlight">help</span> to see available commands.</p>
+    </div>
+    <form class="terminal-form" id="terminalForm">
+      <label for="terminalInput"><span>adel@portfolio</span> <b>~</b> $</label>
+      <input id="terminalInput" type="text" autocomplete="off" spellcheck="false" aria-label="Terminal command" />
+    </form>
+  </div>
 
   <script src="script.js"></script>
 </body>
