@@ -19,7 +19,7 @@ let renderer,scene,camera,points,core,ring,clock,frame=0;
 const mouse={x:0,y:0},target={x:0,y:0};
 function init3D(){
  if(!window.THREE)return;
- const small=innerWidth<700;
+ const small=Math.min(innerWidth,innerHeight)<700||matchMedia('(pointer:coarse)').matches;
  scene=new THREE.Scene();
  camera=new THREE.PerspectiveCamera(58,innerWidth/innerHeight,.1,500);camera.position.z=28;
  renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:!small});
@@ -108,7 +108,8 @@ function setActive(i){
  activeScene=i;
  navLinks.forEach((a,k)=>{const on=k===i;a.classList.toggle('active',on);on?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current')});
  portals.forEach((b,k)=>{const on=k===i;b.classList.toggle('active',on);on?b.setAttribute('aria-current','true'):b.removeAttribute('aria-current')});
- el.sector.textContent=`SECTOR ${String(i).padStart(2,'0')} / ${NAMES[i]}`;
+ el.sector.innerHTML=`SECTOR ${String(i).padStart(2,'0')}<span class="sname"> / ${NAMES[i]}</span>`;
+ document.body.classList.toggle('away',i!==0);
 }
 function goScene(n){
  n=Math.max(0,Math.min(sections.length-1,n));
