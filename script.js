@@ -3,7 +3,7 @@
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer=matchMedia('(hover:hover) and (pointer:fine)').matches;
-const NAMES=['ORIGIN','THE MIND','THE PATH','THE SYSTEM','ARTIFACTS','THE SIGNAL'];
+const NAMES=['ORIGIN','THE MIND','THE SYSTEM','ARTIFACTS','THE SIGNAL'];
 const el={xy:$('#xy'),cursor:$('#cursor'),sector:$('#sector'),time:$('#time'),loader:$('#loader'),flash:$('#sceneFlash'),sound:$('#sound'),soundState:$('#sound b'),skillTitle:$('#skillTitle'),skillDesc:$('#skillDesc')};
 const sections=$$('.screen'),navLinks=$$('nav a'),portals=$$('.portal'),nodes=$$('.node');
 let activeScene=0,sceneBusy=false;
