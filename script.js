@@ -16,8 +16,53 @@ init();addEventListener('resize',()=>{if(camera&&renderer){camera.aspect=innerWi
 addEventListener('mousemove',e=>{mouse.x=e.clientX/innerWidth-.5;mouse.y=e.clientY/innerHeight-.5;target.x=mouse.x*2.5;target.y=-mouse.y*1.8;document.querySelector('#xy').textContent=`X ${String(e.clientX).padStart(3,'0')} / Y ${String(e.clientY).padStart(3,'0')}`;let c=document.querySelector('#cursor');if(c){c.style.left=e.clientX+'px';c.style.top=e.clientY+'px'}});
 const cur=document.querySelector('#cursor');document.querySelectorAll('a,button').forEach(el=>{el.onmouseenter=()=>cur?.classList.add('hover');el.onmouseleave=()=>cur?.classList.remove('hover')});
 addEventListener('load',()=>setTimeout(()=>document.querySelector('#loader').classList.add('done'),1100));
-const links=[...document.querySelectorAll('nav a')];const secs=[...document.querySelectorAll('.screen')];new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('active',a.hash==='#'+e.target.id))}),{threshold:.45}).observe;secs.forEach(s=>new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('active',a.hash==='#'+e.target.id))}),{threshold:.45}).observe(s));
+const links=[...document.querySelectorAll('nav a')];const secs=[...document.querySelectorAll('.screen')];secs.forEach(s=>new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('active',a.hash==='#'+e.target.id))}),{threshold:.45}).observe(s));
 document.querySelector('#enter').onclick=()=>document.querySelector('#about').scrollIntoView({behavior:'smooth'});
 document.querySelectorAll('.node').forEach(b=>b.onclick=()=>{document.querySelectorAll('.node').forEach(n=>n.classList.remove('selected'));b.classList.add('selected');document.querySelector('#skillTitle').textContent=b.dataset.title;document.querySelector('#skillDesc').textContent=b.dataset.desc});
 const tm=document.querySelector('#time');function tick(){tm.textContent=new Date().toLocaleTimeString('en-GB',{hour12:false})}tick();setInterval(tick,1000);
 let audio=null,osc=null,gain=null,on=false;document.querySelector('#sound').onclick=()=>{on=!on;document.querySelector('#sound b').textContent=on?'ON':'OFF';if(on){audio=audio||new (window.AudioContext||window.webkitAudioContext)();osc=audio.createOscillator();gain=audio.createGain();osc.type='sine';osc.frequency.value=55;gain.gain.value=.008;osc.connect(gain);gain.connect(audio.destination);osc.start()}else if(osc){osc.stop();osc=null}};
+
+// Scene navigation: jump between themed sections with portals, nav dots, and arrow keys.
+const sceneSections=[...document.querySelectorAll('.screen')];
+const portalButtons=[...document.querySelectorAll('.portal')];
+let activeScene=0,sceneBusy=false;
+function goScene(n){
+ n=Math.max(0,Math.min(sceneSections.length-1,n)); if(sceneBusy||n===activeScene)return;
+ activeScene=n;sceneBusy=true;
+ const flash=document.querySelector('#sceneFlash');flash.animate([{opacity:0},{opacity:.12},{opacity:0}],{duration:520,easing:'ease-out'});
+ sceneSections[n].scrollIntoView({behavior:'smooth',block:'start'});
+ sceneSections[n].classList.remove('scene-enter');void sceneSections[n].offsetWidth;sceneSections[n].classList.add('scene-enter');
+ portalButtons.forEach((b,i)=>b.classList.toggle('active',i===n));
+ document.querySelector('#sector').textContent=`SECTOR ${String(n).padStart(2,'0')} / ${['ORIGIN','THE MIND','THE SYSTEM','ARTIFACTS','THE SIGNAL'][n]}`;
+ setTimeout(()=>sceneBusy=false,850);
+}
+portalButtons.forEach(b=>b.addEventListener('click',()=>goScene(Number(b.dataset.scene))));
+document.querySelectorAll('nav a').forEach((a,i)=>a.addEventListener('click',e=>{e.preventDefault();goScene(i)}));
+document.addEventListener('keydown',e=>{if(['ArrowRight','ArrowDown','PageDown'].includes(e.key)){e.preventDefault();goScene(activeScene+1)}if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();goScene(activeScene-1)}});
+const sceneObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){const idx=sceneSections.indexOf(e.target);if(idx>=0){activeScene=idx;portalButtons.forEach((b,i)=>b.classList.toggle('active',i===idx));document.querySelector('#sector').textContent=`SECTOR ${String(idx).padStart(2,'0')} / ${['ORIGIN','THE MIND','THE SYSTEM','ARTIFACTS','THE SIGNAL'][idx]}`}}}),{threshold:.55});
+sceneSections.forEach(s=>sceneObserver.observe(s));
+
+
+// Cinematic intro sequence
+const intro=document.querySelector('#cinematicIntro');
+const introProgress=document.querySelector('#introProgress');
+const introEnter=document.querySelector('#introEnter');
+const introSkip=document.querySelector('#introSkip');
+let introStarted=performance.now();
+let introFrame;
+function animateIntroProgress(now){
+  if(!intro||intro.classList.contains('leaving'))return;
+  const progress=Math.min(100,((now-introStarted)/2600)*100);
+  if(introProgress)introProgress.style.width=progress+'%';
+  if(progress<100)introFrame=requestAnimationFrame(animateIntroProgress);
+}
+requestAnimationFrame(animateIntroProgress);
+function leaveIntro(){
+  if(!intro||intro.classList.contains('leaving'))return;
+  intro.classList.add('leaving');
+  cancelAnimationFrame(introFrame);
+  setTimeout(()=>intro.remove(),1050);
+}
+introEnter?.addEventListener('click',()=>{leaveIntro();document.querySelector('#home')?.scrollIntoView({behavior:'smooth'});});
+introSkip?.addEventListener('click',leaveIntro);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&intro&&!intro.classList.contains('leaving'))leaveIntro();});
