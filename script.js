@@ -608,3 +608,30 @@ document.addEventListener("keydown", event => {
     else if (terminalWindow?.classList.contains("open")) closeTerminal();
   }
 });
+
+// Inside the Mind intro sequence and archive navigation
+(() => {
+  const intro = document.getElementById('mindIntro');
+  const enter = document.getElementById('enterMind');
+  const index = document.getElementById('mindIndex');
+  if (intro && enter) {
+    document.body.classList.add('intro-active');
+    enter.addEventListener('click', () => {
+      intro.classList.add('is-exiting');
+      setTimeout(() => {
+        intro.classList.add('is-gone');
+        document.body.classList.remove('intro-active');
+        if (index) index.classList.add('index-visible');
+        window.scrollTo({top: 0, behavior: 'smooth'});
+      }, 850);
+    });
+  }
+  document.querySelectorAll('.mind-index a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (intro && !intro.classList.contains('is-gone')) {
+        intro.classList.add('is-gone');
+        document.body.classList.remove('intro-active');
+      }
+    });
+  });
+})();
