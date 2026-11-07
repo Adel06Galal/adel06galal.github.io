@@ -41,28 +41,3 @@ document.querySelectorAll('nav a').forEach((a,i)=>a.addEventListener('click',e=>
 document.addEventListener('keydown',e=>{if(['ArrowRight','ArrowDown','PageDown'].includes(e.key)){e.preventDefault();goScene(activeScene+1)}if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();goScene(activeScene-1)}});
 const sceneObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){const idx=sceneSections.indexOf(e.target);if(idx>=0){activeScene=idx;portalButtons.forEach((b,i)=>b.classList.toggle('active',i===idx));document.querySelector('#sector').textContent=`SECTOR ${String(idx).padStart(2,'0')} / ${['ORIGIN','THE MIND','THE SYSTEM','ARTIFACTS','THE SIGNAL'][idx]}`}}}),{threshold:.55});
 sceneSections.forEach(s=>sceneObserver.observe(s));
-
-
-// Cinematic intro sequence
-const intro=document.querySelector('#cinematicIntro');
-const introProgress=document.querySelector('#introProgress');
-const introEnter=document.querySelector('#introEnter');
-const introSkip=document.querySelector('#introSkip');
-let introStarted=performance.now();
-let introFrame;
-function animateIntroProgress(now){
-  if(!intro||intro.classList.contains('leaving'))return;
-  const progress=Math.min(100,((now-introStarted)/2600)*100);
-  if(introProgress)introProgress.style.width=progress+'%';
-  if(progress<100)introFrame=requestAnimationFrame(animateIntroProgress);
-}
-requestAnimationFrame(animateIntroProgress);
-function leaveIntro(){
-  if(!intro||intro.classList.contains('leaving'))return;
-  intro.classList.add('leaving');
-  cancelAnimationFrame(introFrame);
-  setTimeout(()=>intro.remove(),1050);
-}
-introEnter?.addEventListener('click',()=>{leaveIntro();document.querySelector('#home')?.scrollIntoView({behavior:'smooth'});});
-introSkip?.addEventListener('click',leaveIntro);
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&intro&&!intro.classList.contains('leaving'))leaveIntro();});
