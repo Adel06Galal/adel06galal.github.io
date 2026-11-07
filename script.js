@@ -118,8 +118,14 @@ function renderProjects(filter = "all") {
 
   filtered.forEach(project => {
     // تشكيل رابط الديتيلز: لو فيه رابط لايف يروحله، لو مفيش يروح لسكشن الـ README على جيت هاب
-    const detailsLink = project.live ? project.live : `${project.github}#readme`;
-    const detailsText = project.live ? '<i class="fa-solid fa-rocket"></i> Live Demo' : 'Details';
+    const projectPages = {
+      "clinic-system": "projects/clinic-system.html",
+      "digital-image-processing-gui": "projects/digital-image-processing-gui.html",
+      "machine-learning-model": "projects/machine-learning-model.html"
+    };
+    const repoSlug = project.github.split("/").pop().toLowerCase();
+    const detailsLink = projectPages[repoSlug] || (project.live ? project.live : `${project.github}#readme`);
+    const detailsText = projectPages[repoSlug] ? "Project details" : (project.live ? '<i class="fa-solid fa-rocket"></i> Live Demo' : 'Details');
 
     cardsHTML += `
       <article class="project-card">
