@@ -1332,3 +1332,174 @@ footer { border-top: 1px solid var(--mind-line) !important; background: #050505 
 @media (prefers-reduced-motion: reduce) {
   *, *:before, *:after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
 }
+
+
+/* =========================================================
+   EXPERIENCE V3 — MIND SPACE
+   The visual language is now spatial, kinetic and fragmented.
+   ========================================================= */
+:root {
+  --void: #050506;
+  --bone: #f0eee9;
+  --signal: #ff352d;
+  --electric: #9b82ff;
+  --quiet: rgba(240,238,233,.38);
+}
+body { background: var(--void) !important; color: var(--bone) !important; cursor: none !important; }
+body:before {
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:2;
+  background: radial-gradient(ellipse at var(--mx,50%) var(--my,50%), rgba(255,55,45,.07), transparent 32%);
+}
+a, button { cursor: none !important; }
+.bg-grid { opacity:.025 !important; background-size: 90px 90px !important; }
+.bg-orb { opacity:.08 !important; filter: blur(130px) !important; }
+.noise-overlay { opacity:.055 !important; z-index:3; }
+.mind-atmosphere { position:fixed; inset:0; z-index:-1; pointer-events:none; overflow:hidden; }
+.atmo-ring { position:absolute; width:70vw; height:70vw; max-width:1000px; max-height:1000px; border:1px solid rgba(255,255,255,.045); border-radius:50%; left:50%; top:50%; transform:translate(-50%,-50%); }
+.ring-a { animation: ringDrift 44s linear infinite; }
+.ring-b { width:50vw;height:50vw;border-color:rgba(255,53,45,.08); animation:ringDrift 34s linear infinite reverse; }
+.ring-c { width:90vw;height:90vw;border-style:dashed;opacity:.35; animation:ringDrift 70s linear infinite; }
+.atmo-scan { position:absolute; left:0;right:0;top:-10%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,53,45,.5),transparent); animation:scan 12s linear infinite; }
+@keyframes ringDrift { to { transform:translate(-50%,-50%) rotate(360deg) scale(1.03); } }
+@keyframes scan { to { top:110%; } }
+
+/* Custom cursor */
+.cursor-aura { position:fixed; width:260px;height:260px;border-radius:50%; pointer-events:none; z-index:100000; transform:translate(-50%,-50%); background:radial-gradient(circle,rgba(255,53,45,.10),rgba(155,130,255,.035) 35%,transparent 70%); mix-blend-mode:screen; opacity:0; transition:opacity .25s; }
+.cursor-crosshair { position:fixed; width:26px;height:26px; left:0;top:0; z-index:100001; pointer-events:none; transform:translate(-50%,-50%); transition:width .2s,height .2s; }
+.cursor-crosshair span,.cursor-crosshair i { position:absolute;background:var(--signal);display:block; }
+.cursor-crosshair span { width:1px;height:100%;left:50%; }
+.cursor-crosshair i { height:1px;width:100%;top:50%; }
+body.cursor-active .cursor-aura { opacity:1; }
+body.cursor-hover .cursor-crosshair { width:48px;height:48px; }
+body.cursor-hover .cursor-crosshair span,body.cursor-hover .cursor-crosshair i { background:var(--bone); }
+@media (pointer:coarse) { body,a,button {cursor:auto!important} .cursor-aura,.cursor-crosshair {display:none} }
+
+/* The intro becomes an abstract gate */
+.mind-intro { background:#030304!important; }
+.mind-intro:before { width:95vw;height:95vw;border-color:rgba(255,255,255,.07); box-shadow:0 0 0 9vw rgba(255,255,255,.012),0 0 0 18vw rgba(255,255,255,.009); }
+.mind-intro:after { content:"A THOUGHT IS A PORTAL"; font-size:9px;letter-spacing:.45em; }
+.intro-center h1 { font-size:clamp(5rem,15vw,17rem)!important; line-height:.68!important; letter-spacing:-.12em!important; transform:rotate(-4deg); }
+.intro-center h1 em { display:inline-block; transform:translateX(7%) rotate(3deg); color:var(--signal)!important; }
+.intro-caption { text-transform:uppercase;letter-spacing:.13em;font:10px monospace!important; }
+.enter-mind { position:relative; overflow:hidden; padding:19px 25px!important; border:1px solid rgba(255,255,255,.2)!important; }
+.enter-mind:before { content:"";position:absolute;inset:0;background:var(--signal);transform:translateX(-101%);transition:transform .4s cubic-bezier(.7,0,.2,1);z-index:-1; }
+.enter-mind:hover:before {transform:translateX(0)}
+.intro-topline,.intro-bottom { font:9px monospace!important; letter-spacing:.2em; }
+
+/* Replace the old navbar look with a floating control strip */
+.navbar { position:fixed!important; top:22px!important; left:50%!important; transform:translateX(-50%); width:min(92%,1180px)!important; border:1px solid rgba(255,255,255,.09)!important; border-radius:999px!important; background:rgba(7,7,8,.58)!important; padding:8px 18px!important; backdrop-filter:blur(22px)!important; z-index:1000; }
+.navbar .nav-link { font-size:9px!important; letter-spacing:.17em!important; }
+.navbar .brand { font-size:13px!important; }
+.navbar .brand-dot { width:5px!important;height:5px!important; }
+.mind-index { position:fixed!important; right:24px!important; top:50%!important; transform:translateY(-50%)!important; left:auto!important; bottom:auto!important; width:190px!important; z-index:900!important; padding:14px!important; background:rgba(5,5,6,.35)!important; border:1px solid rgba(255,255,255,.06)!important; backdrop-filter:blur(12px); }
+.mind-index .index-label { font:8px monospace!important;letter-spacing:.2em!important;color:var(--signal)!important; }
+.mind-index a { display:flex!important;justify-content:space-between;align-items:center; font-size:10px!important; padding:9px 0!important; border-bottom:1px solid rgba(255,255,255,.06)!important; color:rgba(255,255,255,.55)!important; }
+.mind-index a:before { color:var(--signal)!important; }
+.mind-index a:hover { color:#fff!important; transform:translateX(-5px); }
+.side-coordinate { position:fixed;left:20px;bottom:26px;z-index:20;display:flex;flex-direction:column;gap:7px;font:8px monospace;letter-spacing:.18em;color:rgba(255,255,255,.28);writing-mode:vertical-rl;transform:rotate(180deg); }
+
+/* Layout: no familiar centered portfolio panels */
+.hero { min-height:100vh!important; padding:155px 6vw 70px!important; display:flex;align-items:center; }
+.hero-content { max-width:1600px!important; grid-template-columns:1fr 1fr!important; gap:2vw!important; }
+.hero-text-side { padding:0!important; }
+.hero-mini { font-size:9px!important;letter-spacing:.3em!important; }
+.hero-text-side h1 { font-size:clamp(5rem,11vw,13rem)!important; line-height:.72!important; letter-spacing:-.13em!important; margin:30px 0!important; }
+.hero-text-side h1 span { -webkit-text-stroke:1px rgba(240,238,233,.55)!important; transform:translateX(12%) rotate(-2deg)!important; }
+.hero-description { font-size:12px!important; max-width:360px!important; margin-left:12%!important; }
+.typing-line { margin-left:12%!important; }
+.hero-pills { margin-left:12%!important; }
+.hero-buttons { margin-left:12%!important; }
+.hero-socials { margin-left:12%!important; }
+.hero-bottom-strip { max-width:1600px!important; margin:70px auto 0!important; display:flex!important; justify-content:space-between!important; border-top:1px solid rgba(255,255,255,.12)!important; }
+.hero-strip-card { border:0!important;background:transparent!important; padding:15px 0!important; }
+.hero-strip-card strong { font-size:clamp(1.2rem,2.3vw,2.7rem)!important;letter-spacing:-.07em!important; }
+.hero-strip-card span { font:9px monospace!important;letter-spacing:.13em!important; }
+
+/* Mind orb becomes more alien and dimensional */
+.mind-stage { min-height:720px!important; height:78vh!important; }
+.mind-core { width:min(44vw,610px)!important; }
+.core-sphere { inset:12%!important; background:
+ radial-gradient(circle at 35% 25%,rgba(255,255,255,.8),transparent 2%),
+ radial-gradient(ellipse at 65% 70%,#0a0a0c 0%,#111018 28%,#32100f 46%,#f43a2f 49%,#12090a 52%,#070708 72%)!important;
+ box-shadow:inset -50px -40px 80px #000,inset 15px 10px 40px rgba(255,255,255,.18),0 0 120px rgba(255,45,35,.22)!important;
+ animation: spherePulse 5s ease-in-out infinite alternate;
+}
+.core-sphere:after { content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 120deg,transparent 0 18%,rgba(255,255,255,.12) 20%,transparent 24% 46%,rgba(255,53,45,.22) 49%,transparent 54%);animation:spinSlow 18s linear infinite; }
+.core-halo { border-style:dashed!important; }
+.halo-two { border-width:2px!important; }
+.core-orbit span { width:11px;height:11px; }
+.core-coordinate { font-size:8px!important; }
+.floating-word { mix-blend-mode:screen; }
+.word-logic { font-size:clamp(3rem,6vw,7rem)!important; -webkit-text-stroke:1px rgba(255,255,255,.45)!important; }
+.word-curiosity { font-size:9px!important;letter-spacing:.3em!important;writing-mode:vertical-rl; }
+@keyframes spherePulse { from {filter:hue-rotate(-8deg) brightness(.8);transform:translateZ(0) scale(.97)} to {filter:hue-rotate(8deg) brightness(1.2);transform:translateZ(20px) scale(1.03)} }
+@keyframes spinSlow { to {transform:rotate(360deg)} }
+
+/* Scroll chapters: oversized chapter numbers and irregular rhythm */
+.section { min-height:80vh; padding:160px 8vw!important; position:relative!important; }
+.section:before { content:attr(id); position:absolute; top:45px; left:8vw; font:9px monospace; letter-spacing:.25em; color:rgba(255,255,255,.24); text-transform:uppercase; }
+.section h2 { font-size:clamp(4rem,10vw,12rem)!important; line-height:.76!important; max-width:1000px; text-transform:uppercase; }
+.section-heading { margin-bottom:80px!important; }
+.section-heading .section-subtitle { max-width:400px!important; font-size:12px!important; }
+#about { background:linear-gradient(180deg,transparent,rgba(255,255,255,.012),transparent)!important; }
+#about .about-content { display:grid!important;grid-template-columns:1.2fr .8fr!important; }
+#about .about-card:nth-child(odd) { transform:translateY(35px); }
+#focus .focus-grid { display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important; }
+#focus .focus-card:nth-child(2) { transform:translateY(55px); }
+#skills .skills-grid { display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important; }
+#skills .skill-card:nth-child(3n+2) { transform:translateY(28px); }
+
+/* Kinetic marquee */
+.mind-marquee { overflow:hidden; border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1); padding:24px 0; transform:rotate(-1.2deg) scale(1.02); background:var(--signal); color:#090909; }
+.marquee-track { display:flex;align-items:center;gap:40px;width:max-content;animation:marqueeMove 24s linear infinite; font-size:clamp(2rem,5vw,5rem);font-weight:900;letter-spacing:-.07em; }
+.marquee-track b { font-size:.4em; }
+@keyframes marqueeMove { to { transform:translateX(-50%) } }
+
+/* Projects: switch from cards to a numbered editorial list */
+#projects .projects-grid,#projects #projectsContainer { display:block!important; }
+#projects .project-card { display:grid!important;grid-template-columns:90px minmax(0,1fr) 60px!important; gap:20px!important; padding:42px 0!important; border-top:1px solid rgba(255,255,255,.15)!important; }
+#projects .project-card h3 { font-size:clamp(2.5rem,6vw,7rem)!important; letter-spacing:-.1em!important; line-height:.78!important; }
+#projects .project-card:after { content:"OPEN ↗"; position:absolute;right:0;bottom:24px;font:8px monospace;letter-spacing:.2em;color:var(--signal); }
+#projects .project-card:hover h3 { color:var(--signal)!important; transform:skewX(-4deg) translateX(10px); }
+#projects .project-card:hover { border-color:var(--signal)!important; }
+#projects .project-card .project-description { max-width:500px; }
+
+/* Contact should feel like a final portal */
+#contact { min-height:90vh; display:flex; flex-direction:column; justify-content:center; }
+#contact h2 { font-size:clamp(5rem,13vw,16rem)!important;line-height:.7!important;letter-spacing:-.12em!important; }
+#contact .contact-content { margin-top:60px!important; }
+#contact .contact-card { border-top:1px solid rgba(255,255,255,.15)!important; padding-top:22px!important; }
+footer { padding:30px 6vw!important; }
+
+/* Reveal motion and mobile fallback */
+.reveal { opacity:0; transform:translateY(45px) skewY(1deg); filter:blur(5px); transition:opacity .9s cubic-bezier(.2,.7,.1,1),transform .9s cubic-bezier(.2,.7,.1,1),filter .9s; }
+.reveal.visible { opacity:1; transform:none; filter:none; }
+@media (max-width:1100px) {
+ .mind-index { right:10px!important;width:155px!important; }
+ .hero-content { grid-template-columns:1fr!important; }
+ .mind-stage { min-height:560px!important;height:70vw!important; }
+ .mind-core { width:min(65vw,550px)!important; }
+ .hero-text-side h1 { font-size:clamp(5rem,16vw,10rem)!important; }
+ .hero-description,.typing-line,.hero-pills,.hero-buttons,.hero-socials { margin-left:0!important; }
+ .hero-bottom-strip { margin-top:35px!important; }
+}
+@media (max-width:760px) {
+ body { cursor:auto!important; }
+ .navbar { width:94%!important;top:10px!important;padding:7px 12px!important; }
+ .mind-index { position:relative!important;top:auto!important;right:auto!important;transform:none!important;width:100%!important;display:grid!important;grid-template-columns:repeat(2,1fr);margin:10px auto!important; }
+ .mind-index .index-label { grid-column:1/-1; }
+ .side-coordinate { display:none; }
+ .hero { padding:130px 6vw 40px!important; }
+ .hero-text-side h1 { font-size:clamp(4.3rem,19vw,7rem)!important; }
+ .mind-stage { min-height:430px!important;height:110vw!important;max-height:600px; }
+ .mind-core { width:75vw!important; }
+ .hero-bottom-strip { display:grid!important;grid-template-columns:repeat(3,1fr);gap:10px; }
+ .hero-strip-card strong { font-size:1.3rem!important; }
+ .section { min-height:auto;padding:100px 6vw!important; }
+ .section:before { left:6vw; }
+ #about .about-content,#focus .focus-grid,#skills .skills-grid { grid-template-columns:1fr!important; }
+ #about .about-card:nth-child(odd),#focus .focus-card:nth-child(2),#skills .skill-card:nth-child(3n+2) { transform:none; }
+ #projects .project-card { grid-template-columns:35px 1fr!important; }
+ #projects .project-card h3 { font-size:clamp(2.5rem,12vw,5rem)!important; }
+ #contact h2 { font-size:clamp(4rem,18vw,8rem)!important; }
+}

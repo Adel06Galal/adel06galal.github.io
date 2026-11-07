@@ -660,3 +660,61 @@ document.addEventListener("keydown", event => {
     word.style.animation = `wordDrift ${5 + i * 1.8}s ease-in-out ${i * .4}s infinite alternate`;
   });
 })();
+
+
+/* EXPERIENCE V3 interactions: cursor, scroll chapters, word reveals */
+(() => {
+  const aura = document.getElementById('cursorAura');
+  const cross = document.getElementById('cursorCrosshair');
+  const coarse = window.matchMedia('(pointer: coarse)').matches;
+  if (!coarse && aura && cross) {
+    document.body.classList.add('cursor-active');
+    window.addEventListener('mousemove', e => {
+      aura.style.left = e.clientX + 'px'; aura.style.top = e.clientY + 'px';
+      cross.style.left = e.clientX + 'px'; cross.style.top = e.clientY + 'px';
+      document.documentElement.style.setProperty('--mx', (e.clientX/window.innerWidth*100)+'%');
+      document.documentElement.style.setProperty('--my', (e.clientY/window.innerHeight*100)+'%');
+    });
+    document.querySelectorAll('a,button,.project-card,.skill-card,.focus-card').forEach(el => {
+      el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
+    });
+  }
+
+  // Stagger section elements as they enter the viewport.
+  const revealItems = document.querySelectorAll('.section.reveal, .hero.reveal, .project-card, .about-card, .focus-card, .skill-card');
+  revealItems.forEach((el, i) => {
+    el.style.transitionDelay = (Math.min(i % 5, 4) * 70) + 'ms';
+  });
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold: .12});
+  revealItems.forEach(el => io.observe(el));
+
+  // Scroll-linked section progress and subtle section depth.
+  const sections = [...document.querySelectorAll('header.hero, main section, body > section')];
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    document.body.style.setProperty('--scroll-progress', (y/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%');
+    document.querySelectorAll('.mind-index a').forEach(link => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (!target) return;
+      const rect = target.getBoundingClientRect();
+      link.classList.toggle('active', rect.top < window.innerHeight*.55 && rect.bottom > window.innerHeight*.2);
+    });
+  }, {passive:true});
+
+  // Project titles briefly distort on hover, like a signal glitch.
+  document.querySelectorAll('.project-card h3').forEach(title => {
+    title.addEventListener('mouseenter', () => {
+      title.style.textShadow = '2px 0 rgba(255,53,45,.7), -2px 0 rgba(155,130,255,.5)';
+      title.style.transition = 'transform .25s, text-shadow .25s';
+    });
+    title.addEventListener('mouseleave', () => title.style.textShadow = '');
+  });
+})();
