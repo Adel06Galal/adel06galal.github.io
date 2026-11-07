@@ -85,7 +85,7 @@ tick();setInterval(tick,1000);
 
 /* ---------- Skills ---------- */
 nodes.forEach(b=>b.addEventListener('click',()=>{
- nodes.forEach(n=>n.classList.remove('selected'));b.classList.add('selected');
+ nodes.forEach(n=>{n.classList.remove('selected');n.setAttribute('aria-pressed','false')});b.classList.add('selected');b.setAttribute('aria-pressed','true');
  el.skillTitle.textContent=b.dataset.title;el.skillDesc.textContent=b.dataset.desc;
 }));
 
