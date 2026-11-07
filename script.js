@@ -56,7 +56,7 @@ function init3D(){
   renderer.render(scene,camera);
  })();
 }
-init3D();
+try{init3D()}catch(err){renderer=null;canvas.style.display='none';console.warn('3D background disabled:',err)}
 let resizeT;
 addEventListener('resize',()=>{clearTimeout(resizeT);resizeT=setTimeout(()=>{
  if(!renderer)return;
@@ -117,7 +117,7 @@ function goScene(n){
  if(!reduce)el.flash.animate([{opacity:0},{opacity:.12},{opacity:0}],{duration:520,easing:'ease-out'});
  sections[n].scrollIntoView({behavior,block:'start'});
  if(!reduce){sections[n].classList.remove('scene-enter');void sections[n].offsetWidth;sections[n].classList.add('scene-enter')}
- setTimeout(()=>sceneBusy=false,reduce?0:850);
+ setTimeout(()=>{sceneBusy=false;syncFromScroll()},reduce?0:1000);
 }
 portals.forEach(b=>b.addEventListener('click',()=>goScene(Number(b.dataset.scene))));
 navLinks.forEach((a,i)=>a.addEventListener('click',e=>{e.preventDefault();goScene(i)}));
@@ -128,9 +128,15 @@ document.addEventListener('keydown',e=>{
  if(e.key==='ArrowRight'){e.preventDefault();goScene(activeScene+1)}
  else if(e.key==='ArrowLeft'){e.preventDefault();goScene(activeScene-1)}
 });
+// Find the section nearest the viewport centre (used after a programmatic jump).
+function syncFromScroll(){
+ const mid=innerHeight/2;let best=0,dist=Infinity;
+ sections.forEach((s,i)=>{const r=s.getBoundingClientRect();const d=Math.abs((r.top+r.bottom)/2-mid);if(d<dist){dist=d;best=i}});
+ if(best!==activeScene)setActive(best);
+}
 // One observer drives nav, portals and HUD while scrolling.
 const io=new IntersectionObserver(es=>es.forEach(e=>{
- if(e.isIntersecting){const i=sections.indexOf(e.target);if(i>=0&&i!==activeScene)setActive(i)}
+ if(e.isIntersecting&&!sceneBusy){const i=sections.indexOf(e.target);if(i>=0&&i!==activeScene)setActive(i)}
 }),{threshold:.55});
 sections.forEach(s=>io.observe(s));
 })();
