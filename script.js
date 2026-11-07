@@ -137,6 +137,6 @@ function syncFromScroll(){
 // One observer drives nav, portals and HUD while scrolling.
 const io=new IntersectionObserver(es=>es.forEach(e=>{
  if(e.isIntersecting&&!sceneBusy){const i=sections.indexOf(e.target);if(i>=0&&i!==activeScene)setActive(i)}
-}),{threshold:.55});
+}),{rootMargin:'-50% 0px -50% 0px',threshold:0});
 sections.forEach(s=>io.observe(s));
 })();
