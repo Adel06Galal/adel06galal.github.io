@@ -146,7 +146,32 @@ nav{left:max(4.5vw,calc(env(safe-area-inset-left) + 10px))}
 /* Desktop skills layout: constellation sits between the text and the portal dock; info panel under it */
 @media(min-width:901px){
  .skills{min-height:max(100vh,700px);min-height:max(100svh,700px)}
- .constellation{width:min(44vw,760px);height:56vh;min-height:450px;right:calc(4.5vw + 34px)}
- .skill-info{left:auto;right:0;top:100%;bottom:auto;margin-top:14px;text-align:right;width:340px}
+ .constellation{width:min(44vw,760px);height:56vh;min-height:450px;max-height:700px;right:calc(4.5vw + 34px)}
+ .skill-info{left:auto;right:calc(100% + 28px);top:auto;bottom:0;margin:0;text-align:left;width:clamp(220px,24vw,340px)}
 }
 @media(min-width:1600px){.constellation{right:calc(4.5vw + 160px)}}
+
+/* ===== Calm mode, moving orbs, skill ↔ project links ===== */
+.hbtns{display:flex;align-items:center;gap:22px}
+#calm{background:none;border:0;font-size:11px;letter-spacing:2px;color:#8c848f}
+#calm b{color:#ed2945;margin-left:8px}
+#calm[aria-disabled="true"]{opacity:.55}
+@media(max-width:430px){.status{display:none}}
+html.calm{scroll-behavior:auto}
+html.calm *,html.calm *:before,html.calm *:after{animation:none!important;transition:none!important}
+@media(pointer:coarse){#calm{position:relative}#calm:after{content:"";position:absolute;inset:-9px -8px}}
+
+/* orbs: position comes from --x/--y (rest) plus --dx/--dy (orbit motion, set by script.js); hover scale uses the separate `scale` property */
+.orbit .node{transition:border-color .3s,box-shadow .3s,scale .3s;transform:translate(var(--dx,0px),var(--dy,0px)) translate(-50%,-50%) rotate(var(--r));scale:var(--s,1)}
+
+.skill-info .skill-used{margin:10px 0 0;font-size:11px;letter-spacing:1.5px;color:#8c848f;line-height:1.8}
+.skill-info .skill-used:empty{display:none}
+.skill-used a{color:#ed2945;border-bottom:1px solid #ed294555;margin-left:2px}
+.skill-used a:hover{border-color:#ed2945}
+.project.lit{border-top-color:#ed294599;background:linear-gradient(90deg,#ed294522,transparent 70%);box-shadow:inset 3px 0 0 #ed2945}
+.project.lit h3{color:#fff}
+.project-intro>.lit-note{margin:14px 0 0;font-size:11px;letter-spacing:1.5px;line-height:1.8;color:#8c848f}
+.lit-note b{color:#ed2945;font-weight:600}
+.lit-note button{margin-left:8px;background:none;border:0;border-bottom:1px solid #ed294555;color:#ed2945;font-size:11px;letter-spacing:2px;padding:0 0 2px}
+
+@media(min-width:1181px){.skill-info{width:clamp(220px,30vw,420px)}}
